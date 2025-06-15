@@ -4,7 +4,6 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 const UI_URL = process.env.UI_URL;
 app.use(cors({ origin: UI_URL })); // change for production
 app.use(express.json());
@@ -48,4 +47,4 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+module.exports = app;
