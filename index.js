@@ -1,14 +1,14 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const app = express();
 const UI_URL = process.env.UI_URL;
-app.use(cors({ origin: UI_URL })); // change for production
+
+app.use(cors({ origin: UI_URL }));
 app.use(express.json());
 
-// POST /send-email
 app.post("/send-email", async (req, res) => {
   const { name, email, phone, message } = req.body;
 
@@ -20,8 +20,8 @@ app.post("/send-email", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER, // your Gmail address
-        pass: process.env.EMAIL_PASS, // your app password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -47,4 +47,6 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
+// ✅ Required for Vercel serverless function
 module.exports = app;
+module.exports.handler = (req, res) => app(req, res);
