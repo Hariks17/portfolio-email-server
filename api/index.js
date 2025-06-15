@@ -6,7 +6,15 @@ require("dotenv").config();
 const app = express();
 const UI_URL = process.env.UI_URL;
 
-app.use(cors({ origin: UI_URL }));
+app.use(
+  cors({
+    origin: "https://thehariks.com",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.post("/send-email", async (req, res) => {
